@@ -150,7 +150,8 @@ export default function SignUp({ navigation }) {
       <View style={styles.container}>
         <ScrollView>
         <View style={styles.form}>
-          <View style={styles.avatarContainer}>
+          <View style={globalStyles.avatarParentContainer}>
+          <View style={globalStyles.avatarContainer}>
             <Image
               source={
                 data?.image
@@ -165,6 +166,7 @@ export default function SignUp({ navigation }) {
             >
               <Text>Upload</Text>
             </TouchableOpacity>
+          </View>
           </View>
           <View style={{ width: "100%", marginTop: 20 }}>
             <View>
@@ -361,14 +363,6 @@ const styles = StyleSheet.create({
   sectionText: {
     fontWeight: "bold",
     marginVertical: 5,
-  },
-  avatarContainer: {
-    borderRadius: 50,
-    overflow: "hidden",
-    position: "relative",
-    marginRight: 21,
-    height: 80,
-    width: 80,
   },
   pickImageTouchable: {
     position: "absolute",

@@ -26,7 +26,8 @@ import * as Linking from "expo-linking";
 import GreetingScreenComponent from "../components/greetingScreenComponent";
 import Constants from "expo-constants";
 
-const { width, height } = Dimensions.get("screen");
+const { width, height } = Dimensions.get("window");
+
 
 
 Notifications.setNotificationHandler({
@@ -50,6 +51,7 @@ export default function Home({ navigation }) {
   const [introModalOpen, setIntroModalOpen] = useState(true);
   const notificationListener = useRef();
   const responseListener = useRef();
+  
 
   const currentTime = new Date();
   const currentHour = currentTime.getHours();
@@ -223,7 +225,7 @@ export default function Home({ navigation }) {
         </View>
       </Modal>
       <Text style={globalStyles.topText}>Welcome to Hcue mobile app</Text>
-      <View style={{height:height - Constants.statusBarHeight - 50 - 195}}>
+      <View style={{height:height - Constants.statusBarHeight - 50 -100 }}>
       <View style={styles.imageContainer2}>
         <Image
           source={require("../assets/header-bg.jpg")}

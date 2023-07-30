@@ -25,6 +25,7 @@
         "foregroundImage": "./assets/splash.png",
         "backgroundColor": "#ffffff"
       },
+      "permissions":["READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE"],
       "package": "com.hcueeats.app",
       "googleServicesFile": "",
       "versionCode": 1,
@@ -41,6 +42,14 @@
       "eas": {
         "projectId": "f8833bda-23f1-4a16-893d-7537276c470e"
       }
-    }
+    },
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/favicon.png",
+          "color": "#ffffff"
+        }
+      ]]
   }
 }

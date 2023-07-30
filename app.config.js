@@ -1,5 +1,7 @@
-import { GOOGLE_API_KEY } from "dotenv";
+import * as dotenv from 'dotenv';
 
+// initialize dotenv
+dotenv.config();
 
 export default ({ config }) => ({
     ...config,
@@ -8,7 +10,7 @@ export default ({ config }) => ({
     ios: {
       supportsTablet: true,
       config: {
-        googleMapsApiKey: GOOGLE_API_KEY,
+        googleMapsApiKey: process.env.GOOGLE_API_KEY,
       },
     },
     android: {
@@ -20,7 +22,7 @@ export default ({ config }) => ({
       googleServicesFile:process.env.GOOGLE_SERVICES_JSON,
       config: {
         googleMaps: {
-          apiKey: GOOGLE_API_KEY,
+          apiKey: process.env.GOOGLE_API_KEY,
         },
       },
     },

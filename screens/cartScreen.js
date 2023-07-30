@@ -113,8 +113,7 @@ export default function Cart({ navigation }) {
     }
   };
 
-  const userLocation = async (address) => {
-    try {
+  const userLocation = (address) => {
       setLoadingModal(true);
       setAddressModal(false);
       // console.log(address);
@@ -133,11 +132,7 @@ export default function Cart({ navigation }) {
         })
       );
       setLoadingModal(false);
-    } catch (error) {
-      console.log(error);
-      setLoadingModal(false);
-      toast("There was an error choosing delivery location,Try again...")
-    }
+   
   };
 
   const reverseGeoCode = async () => {

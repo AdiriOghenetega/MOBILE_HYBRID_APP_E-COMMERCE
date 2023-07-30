@@ -64,7 +64,10 @@ export const globalStyles = StyleSheet.create({
     borderRadius: 15,
     elevation: 3,
     backgroundColor: "rgb(254,235,228)",
-    shadowOffset: { width: 2, height: 5 },
+    shadowOffset: { 
+      width: 2, 
+      height: 5 
+    },
     shadowColor: "#333",
     shadowOpacity: 0.3,
     shadowRadius: 2,
@@ -83,4 +86,17 @@ export const globalStyles = StyleSheet.create({
     justifyContent: "space-between",
   },
   passwordTextInput: { fontSize: 15, color: "gray", width: "90%" },
+  avatarParentContainer:{
+    width:"90%",
+    alignItems:"center",
+    justifyContent:"center",
+    alignSelf:"flex-start",
+  },
+  avatarContainer: { 
+    borderRadius: 50,
+    overflow: "hidden" ,
+    position: "relative",
+    height: 80,
+    width: 80,
+    },
 });

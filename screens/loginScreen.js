@@ -72,13 +72,15 @@ export default function Login({ navigation }) {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
         <View style={styles.form}>
-          <View style={styles.avatarContainer}>
+          <View style={globalStyles.avatarParentContainer}>
+          <View style={globalStyles.avatarContainer}>
             <Image
               source={require("../assets/login-animation.gif")}
               style={{ width: 80, height: 80 }}
             />
           </View>
-          <View style={{ width: "100%" }}>
+          </View>
+          <View style={{ width: "100%",marginTop: 20 }}>
             <View>
               <TextInput
                 style={styles.formInput}
@@ -182,7 +184,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginVertical: 5,
   },
-  avatarContainer: { borderRadius: 50, overflow: "hidden" },
   signupContainer: {
     flexDirection: "row",
     paddingHorizontal: 30,
