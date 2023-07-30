@@ -12,7 +12,7 @@ import {
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { GOOGLE_API_KEY } from "@dotenv";
 
-const { width, height } = Dimensions.get("screen");
+const { width, height } = Dimensions.get("window");
 const ASPECT_RATIO = width / height;
 const LATITIDE_DELTA = 0.02;
 const LONGITUDE_DELTA = LATITIDE_DELTA * ASPECT_RATIO;
@@ -40,8 +40,12 @@ export default function Address({
             </View>
           </TouchableOpacity>
         </View>
+        <View>
         <Text style={styles.orText}>Or</Text>
+        </View>
+        <View>
         <Text style={styles.restaurantSelectText}>Search location</Text>
+        </View>
         <View style={styles.serachLocationContainer}>
           <View style={styles.autoCompleteContainer}>
             <GooglePlacesAutocomplete
@@ -52,9 +56,8 @@ export default function Address({
               placeholder="Search"
               textInputProps={{
                 placeholderTextColor: "rgb(237,139,27)",
-                returnKeyType: "search",
               }}
-              fetchDetails
+              fetchDetails = {true}
               onPress={(data, details) => {
                 // 'details' is provided when fetchDetails = true
                 const { lat, lng } = details.geometry.location;
@@ -79,7 +82,7 @@ export default function Address({
         </TouchableOpacity>
         <MapView
           style={styles.map}
-          region={selectedLocation}
+          region={selectedLocation && selectedLocation}
           provider={PROVIDER_GOOGLE}
         >
           <Marker coordinate={selectedLocation} title="You" />
@@ -94,10 +97,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   map: {
-    width: "100%",
+    width: width,
     height: "70%",
     position: "relative",
-    zIndex: 0,
+    zIndex: 1,
     borderRadius: 10,
   },
   currentLocationContainer: {
@@ -126,8 +129,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   autoCompleteContainer: {
-    width: "100%",
-    zIndex: 2,
+    width: width,
     position: "absolute",
   },
   autocompleteInput: {
