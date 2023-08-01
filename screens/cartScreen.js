@@ -9,6 +9,7 @@ import {
   Modal,
   ActivityIndicator,
   TouchableOpacity,
+  Dimensions
 } from "react-native";
 import * as Location from "expo-location";
 import { useSelector, useDispatch } from "react-redux";
@@ -30,6 +31,10 @@ import { addGuestRedux } from "../redux/guestSlice";
 import OrderPending from "../components/orderpending";
 import { numberWithCommas } from "../utils/helpers";
 
+const { width, height } = Dimensions.get("screen");
+const ASPECT_RATIO = width / height;
+const LATITIDE_DELTA = 0.3;
+const LONGITUDE_DELTA = LATITIDE_DELTA * ASPECT_RATIO;
 
 Location.setGoogleApiKey(GOOGLE_API_KEY);
 
@@ -56,6 +61,8 @@ export default function Cart({ navigation }) {
   const [customerLocation, setCustomerLocation] = useState({
     latitude: parseFloat(locationData[location]?.latitude),
     longitude: parseFloat(locationData[location]?.longitude),
+    latitudeDelta: LATITIDE_DELTA,
+    longitudeDelta: LONGITUDE_DELTA,
   });
   const [reversedGeo, setReversedGeo] = useState([]);
   const [errorMsg, setErrorMsg] = useState("");
@@ -75,43 +82,68 @@ export default function Cart({ navigation }) {
     reverseGeoCode();
   }, [customerLocation, location]);
 
-  const preciseUserLocation = async () => {
-    try {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
-        setAddressModal(false);
+  useEffect(()=>{
+    ( async()=>{
+      try {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        console.log(status)
+        if (status !== "granted") {
+          setErrorMsg("Permission to access location was denied");
+          setAddressModal(false);
+          setLoadingModal(false);
+          toast(
+            "Permission to access location was denied,change permission in settings"
+          );
+          return;
+        }
+      }catch(error){
+        console.log(error)
         toast(
-          "Permission to access location was denied,change permission in settings"
+          "Permission to access location was denied,change permission in settings to be able change delivery location"
         );
-        return;
       }
-      setLoadingModal(true);
-      setTimeout(() => setAddressModal(false), 2000);
+    })()
+  },[])
 
-      let location = await Location.getCurrentPositionAsync({});
+  // const preciseUserLocation = async () => {
+  //   try {
+  //     let { status } = await Location.requestForegroundPermissionsAsync();
+  //     console.log(status)
+  //     if (status !== "granted") {
+  //       setErrorMsg("Permission to access location was denied");
+  //       setAddressModal(false);
+  //       setLoadingModal(false);
+  //       toast(
+  //         "Permission to access location was denied,change permission in settings"
+  //       );
+  //       return;
+  //     }
+  //     setLoadingModal(true);
+  //     setTimeout(() => setAddressModal(false), 2000);
 
-      setCustomerLocation({
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
-      });
-      dispatch(
-        deliveryLocationRedux({
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        })
-      );
-      setLoadingModal(false);
-    } catch (error) {
-      console.log(error);
-      setLoadingModal(false);
-      toast("There was an error choosing delivery location,Try again...")
-    }
-  };
+  //     let location = await Location.getCurrentPositionAsync({});
+  //    console.log(location)
+  //     setCustomerLocation({
+  //       latitude: location.coords.latitude,
+  //       longitude: location.coords.longitude,
+  //       latitudeDelta: 0.0922,
+  //       longitudeDelta: 0.0421,
+  //     });
+  //     dispatch(
+  //       deliveryLocationRedux({
+  //         latitude: location.coords.latitude,
+  //         longitude: location.coords.longitude,
+  //         latitudeDelta: 0.0922,
+  //         longitudeDelta: 0.0421,
+  //       })
+  //     );
+  //     setLoadingModal(false);
+  //   } catch (error) {
+  //     console.log(error);
+  //     setLoadingModal(false);
+  //     toast("There was an error choosing delivery location,Try again...")
+  //   }
+  // };
 
   const userLocation = (address) => {
       setLoadingModal(true);
@@ -371,7 +403,7 @@ export default function Cart({ navigation }) {
           </View>
           <Address
             userLocation={userLocation}
-            preciseUserLocation={preciseUserLocation}
+            // preciseUserLocation={preciseUserLocation}
             customerLocation={customerLocation}
           />
         </View>

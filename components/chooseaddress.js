@@ -20,7 +20,7 @@ const LONGITUDE_DELTA = LATITIDE_DELTA * ASPECT_RATIO;
 export default function Address({
   userLocation,
   customerLocation,
-  preciseUserLocation,
+  // preciseUserLocation,
 }) {
   const [selectedLocation, setSelectedLocation] = useState(customerLocation);
 
@@ -28,12 +28,11 @@ export default function Address({
     userLocation(selectedLocation);
   };
 
-  console.log(selectedLocation, "selected location");
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
-        <View style={styles.currentLocationContainer}>
+        {/* <View style={styles.currentLocationContainer}>
           <TouchableOpacity onPress={preciseUserLocation}>
             <View style={styles.locationSelectSection}>
               <Text style={{ color: "white" }}>Use Current Location</Text>
@@ -42,7 +41,7 @@ export default function Address({
         </View>
         <View>
         <Text style={styles.orText}>Or</Text>
-        </View>
+        </View> */}
         <View>
         <Text style={styles.restaurantSelectText}>Search location</Text>
         </View>
@@ -51,7 +50,6 @@ export default function Address({
             <GooglePlacesAutocomplete
               styles={{
                 textInput: styles.autocompleteInput,
-                description: { color: "black" },
               }}
               placeholder="Search"
               textInputProps={{
@@ -60,7 +58,7 @@ export default function Address({
               fetchDetails = {true}
               onPress={(data, details) => {
                 // 'details' is provided when fetchDetails = true
-                const { lat, lng } = details.geometry.location;
+                const { lat, lng } = details?.geometry?.location;
                 setSelectedLocation({
                   latitude: lat,
                   longitude: lng,
@@ -82,7 +80,7 @@ export default function Address({
         </TouchableOpacity>
         <MapView
           style={styles.map}
-          region={selectedLocation && selectedLocation}
+          region={selectedLocation}
           provider={PROVIDER_GOOGLE}
         >
           <Marker coordinate={selectedLocation} title="You" />
@@ -97,7 +95,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   map: {
-    width: width,
+    width: "100%",
     height: "70%",
     position: "relative",
     zIndex: 1,
@@ -129,7 +127,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   autoCompleteContainer: {
-    width: width,
+    width: "100%",
     position: "absolute",
   },
   autocompleteInput: {

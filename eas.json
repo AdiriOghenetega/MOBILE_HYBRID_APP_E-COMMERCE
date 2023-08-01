@@ -5,7 +5,9 @@
           "buildType": "apk"
         },
         "env": {
-          "REACT_APP_BASE_URL":"https://hcue-backend.onrender.com"
+          "REACT_APP_BASE_URL":"https://hcue-backend.onrender.com",
+          "SENTRY_ORG":"atdev",
+          "SENTRY_PROJECT":"react-native"
         }
       },
       "production": {}

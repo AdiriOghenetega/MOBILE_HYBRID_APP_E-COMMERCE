@@ -7,6 +7,17 @@ export default ({ config }) => ({
     ...config,
     slug: 'hcue_eats',
     name: 'hcueEats',
+    hooks:{
+      postPublish: [
+        {
+          file: "sentry-expo/upload-sourcemaps",
+          config: {
+            organization: process.env.SENTRY_ORG,
+            project: process.env.SENTRY_PROJECT
+          }
+        }
+      ]
+    },
     ios: {
       supportsTablet: true,
       config: {

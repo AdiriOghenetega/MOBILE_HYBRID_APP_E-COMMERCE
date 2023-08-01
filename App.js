@@ -10,7 +10,6 @@ import Home from "./screens/homeScreen";
 import Menu from "./screens/menuScreen";
 import Categories from "./screens/categoryScreens";
 import Cart from "./screens/cartScreen";
-import About from "./screens/aboutScreen";
 import Account from "./screens/accountScreen";
 import Header from "./components/header";
 import Login from "./screens/loginScreen";
@@ -19,6 +18,14 @@ import MyTabBar from "./components/tabBar";
 import OrderList from "./screens/orderListScreen";
 import { LogBox } from "react-native";
 import { RootSiblingParent } from "react-native-root-siblings";
+import * as Sentry from 'sentry-expo';
+import { SENTRY_DSN } from "@dotenv"
+
+Sentry.init({
+  dsn: SENTRY_DSN,
+  enableInExpoDevelopment: true,
+  debug: true, // If `true`, Sentry will try to print out useful debugging information if something goes wrong with sending the event. Set it to `false` in production
+});
 
 LogBox.ignoreLogs([
   "Sending `onAnimatedValueUpdate` with no listeners registered.",
